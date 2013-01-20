@@ -1,0 +1,119 @@
+<head>
+  <title>PARTY</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <div class="navigation clearfix">
+          <div class="logo">
+            PARTY
+          </div>
+          <div class="pull-right">
+            <a href="#new_activity_modal" role="button" data-toggle="modal">Create An Activity</a>
+            {{loginButtons}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span6">
+
+        <div class="row-fluid">
+          <div class="span6">
+            {{> your_tokens}}
+          </div>
+          <div class="span6">
+            {{> your_points}}
+          </div>
+        </div>
+      </div>
+
+      <div class="span6">
+        {{> new_activity}}
+        {{> your_activities_list}}
+      </div>
+
+    </div>
+  </div>
+</body>
+
+
+
+<template name="new_activity">
+  <div id="new_activity_modal" class="modal hide fade new_activity">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Create An Activity</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label">Name of activity</label>
+          <div class="controls">
+            <input type="text" class="name" placeholder="Activity name" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Point Value</label>
+          <div class="controls">
+            <input type="number" class="points" min="1" max="10" value="1" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn btn-primary save">Save</a>
+    </div>
+  </div>
+</template>
+
+
+
+<template name="your_activities_list">
+  <div class="your_activities_list">
+    <table class="table table-striped">
+      {{#each activities}}
+        <tr>
+          {{> activity_list_row}}
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</template>
+
+
+<template name="activity_list_row">
+  <td>
+    {{name}}
+  </td>
+  <td>
+    {{points}}
+  </td>
+  <td>
+    <input type="button" class="btn" value="I did it!" />
+  </td>
+</template>
+
+
+<template name="your_tokens">
+  <div class="your_tokens">
+    <div>
+      Tokens
+    </div>
+    <h1>{{count}}</h1>
+    <div>
+      <a class="btn btn-success">Spend a Token and go Treat Yourself</a>
+    </div>
+  </div>
+</template>
+
+<template name="your_points">
+  <div class="your_points">
+    <div>
+      Points
+    </div>
+    <h1>{{count}}</h1>
+  </div>
+</template>
