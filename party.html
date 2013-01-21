@@ -11,12 +11,15 @@
             PARTY
           </div>
           <div class="pull-right">
-            <a href="#new_activity_modal" role="button" data-toggle="modal">Create An Activity</a>
+            {{#if currentUser}}
+              <a href="#new_activity_modal" role="button" data-toggle="modal">Create An Activity</a>
+            {{/if}}
             {{loginButtons}}
           </div>
         </div>
       </div>
     </div>
+    {{#if currentUser}}
     <div class="row">
       <div class="span6">
 
@@ -34,8 +37,9 @@
         {{> new_activity}}
         {{> your_activities_list}}
       </div>
-
     </div>
+    {{/if}}
+
   </div>
 </body>
 
@@ -92,7 +96,7 @@
     {{points}}
   </td>
   <td>
-    <input type="button" class="btn" value="I did it!" />
+    <input type="button" class="btn did_activity" value="I did it!" data-points="{{points}}" />
   </td>
 </template>
 
@@ -104,7 +108,7 @@
     </div>
     <h1>{{count}}</h1>
     <div>
-      <a class="btn btn-success">Spend a Token and go Treat Yourself</a>
+      <a class="btn btn-success spend_a_token">Spend a Token and go Treat Yourself</a>
     </div>
   </div>
 </template>

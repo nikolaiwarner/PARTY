@@ -1,1 +1,1 @@
-Activity = new Meteor.Collection("activity")
+Activities = new Meteor.Collection("activities")
