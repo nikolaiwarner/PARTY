@@ -99,7 +99,11 @@
 
 
 <template name="activity_list_row">
-  <input type="button" class="btn did_activity" value="{{name}}: {{points_string points}}" data-points="{{points}}" />
+  <a class="btn did_activity" data-points="{{points}}">
+    <strong>{{name}}</strong>
+    <br>
+    {{points_string points}}
+  </a>
 </template>
 
 
