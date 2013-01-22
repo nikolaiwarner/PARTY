@@ -4,39 +4,36 @@
 
 <body>
   <div class="container">
-    <div class="row">
-      <div class="span12">
-        <div class="navigation clearfix">
-          <div class="logo">
-            PARTY
-          </div>
-          <div class="pull-right">
-            {{loginButtons}}
-          </div>
-        </div>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">PARTY</a>
+        <ul class="nav pull-right">
+          <li>{{loginButtons}}</li>
+        </ul>
       </div>
     </div>
+  </div>
+  <div class="container">
     {{#if currentUser}}
     <div class="row">
-      <div class="span6">
-
+      <div class="span6 offset3">
         <div class="row-fluid">
           <div class="span6">
-            {{> your_tokens}}
+            {{> your_gold_stars}}
           </div>
           <div class="span6">
             {{> your_points}}
           </div>
         </div>
-      </div>
-
-      <div class="span6">
-        {{> new_activity}}
-        {{> your_activities_list}}
+        <div class="row-fluid">
+          <div class="span12">
+            {{> your_activities_list}}
+          </div>
+        </div>
       </div>
     </div>
+    {{> new_activity}}
     {{/if}}
-
   </div>
 </body>
 
@@ -75,42 +72,34 @@
 <template name="your_activities_list">
   <div class="your_activities_list">
     <h2>
-      Do something good
+      Do something good.
     </h2>
-    <table class="table table-striped">
-      {{#each activities}}
-        <tr>
-          {{> activity_list_row}}
-        </tr>
-      {{/each}}
-    </table>
-    <a class='btn' href="#new_activity_modal" role="button" data-toggle="modal">Add An Activity</a>
+    <div class="clearfix">
+    {{#each activities}}
+      {{> activity_list_row}}
+    {{/each}}
+    <br>
+    <a href="#new_activity_modal" role="button" data-toggle="modal">Add An Activity</a>
   </div>
 </template>
 
 
 <template name="activity_list_row">
-  <td>
-    {{name}}
-  </td>
-  <td>
-    {{points}}
-  </td>
-  <td>
-    <input type="button" class="btn did_activity" value="I did it!" data-points="{{points}}" />
-  </td>
+  <input type="button" class="btn did_activity" value="{{name}}: {{points_string points}}" data-points="{{points}}" />
 </template>
 
 
-<template name="your_tokens">
-  <div class="your_tokens">
+<template name="your_gold_stars">
+  <div class="your_gold_stars">
     <div>
-      Tokens
+      Your Gold Stars
     </div>
     <h1>{{count}}</h1>
+    {{#if has_gold_stars}}
     <div>
-      <a class="btn btn-success spend_a_token">Spend a Token and go Treat Yourself</a>
+      <a class="btn btn-success spend_a_gold_star">Spend &#10029;</a>
     </div>
+    {{/if}}
   </div>
 </template>
 
@@ -120,5 +109,10 @@
       Points
     </div>
     <h1>{{count}}</h1>
+    <div>
+      Earn {{points_till_next_gold_star}} more points
+      <br>
+      and get a gold star!
+    </div>
   </div>
 </template>

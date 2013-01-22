@@ -12,10 +12,11 @@ Template.your_activities_list.events
     points = parseInt($(event.currentTarget).data('points'), 10)
     console.log points
     Meteor.users.update {_id: Meteor.userId()}, {$inc: {points: points}}
-    did_i_earn_a_token()
+    did_i_earn_a_gold_star()
 
-
-
+Template.activity_list_row.helpers
+  points_string: (points)->
+    pluralize('point', points)
 
 
 # New Activity
@@ -34,14 +35,16 @@ Template.new_activity.events
 Template.your_points.helpers
   count: ->
     my_points()
+  points_till_next_gold_star: ->
+    10 - my_points()
 
-
-
-Template.your_tokens.helpers
+Template.your_gold_stars.helpers
   count: ->
-    my_tokens()
+    my_gold_stars()
+  has_gold_stars: ->
+    (my_gold_stars() > 0)
 
-Template.your_tokens.events
-  "click .spend_a_token": (event) ->
-    if my_tokens() > 0
-      Meteor.users.update {_id: Meteor.userId()}, {$inc: {tokens: -1}}
+Template.your_gold_stars.events
+  "click .spend_a_gold_star": (event) ->
+    if my_gold_stars() > 0
+      Meteor.users.update {_id: Meteor.userId()}, {$inc: {gold_stars: -1}}
