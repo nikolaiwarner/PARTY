@@ -11,9 +11,6 @@
             PARTY
           </div>
           <div class="pull-right">
-            {{#if currentUser}}
-              <a href="#new_activity_modal" role="button" data-toggle="modal">Create An Activity</a>
-            {{/if}}
             {{loginButtons}}
           </div>
         </div>
@@ -49,7 +46,7 @@
   <div id="new_activity_modal" class="modal hide fade new_activity">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Create An Activity</h3>
+      <h3>Add An Activity</h3>
     </div>
     <div class="modal-body">
       <form class="form-horizontal">
@@ -77,6 +74,9 @@
 
 <template name="your_activities_list">
   <div class="your_activities_list">
+    <h2>
+      Do something good
+    </h2>
     <table class="table table-striped">
       {{#each activities}}
         <tr>
@@ -84,6 +84,7 @@
         </tr>
       {{/each}}
     </table>
+    <a class='btn' href="#new_activity_modal" role="button" data-toggle="modal">Add An Activity</a>
   </div>
 </template>
 

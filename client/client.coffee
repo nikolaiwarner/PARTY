@@ -1,7 +1,5 @@
-Meteor.subscribe("activities")
-
-
 Meteor.autosubscribe ->
+  Meteor.subscribe("activities")
   Meteor.subscribe("userData")
 
 # activity list
@@ -14,6 +12,9 @@ Template.your_activities_list.events
     points = parseInt($(event.currentTarget).data('points'), 10)
     console.log points
     Meteor.users.update {_id: Meteor.userId()}, {$inc: {points: points}}
+    did_i_earn_a_token()
+
+
 
 
 
@@ -32,10 +33,15 @@ Template.new_activity.events
 
 Template.your_points.helpers
   count: ->
-    if Meteor.user()
-      Meteor.user().points || 0
+    my_points()
+
+
 
 Template.your_tokens.helpers
   count: ->
-    if Meteor.user()
-      Meteor.user().tokens || 0
+    my_tokens()
+
+Template.your_tokens.events
+  "click .spend_a_token": (event) ->
+    if my_tokens() > 0
+      Meteor.users.update {_id: Meteor.userId()}, {$inc: {tokens: -1}}
