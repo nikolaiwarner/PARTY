@@ -12,14 +12,17 @@ my_points = ->
   else
     0
 
-did_i_earn_a_gold_star = ->
+did_i_earn_a_gold_star = (callback) ->
   if my_points() >= 10
-    new_points = my_points() - 10
-    Meteor.users.update {_id: Meteor.userId()}, {$set: {points: new_points}}
-    Meteor.users.update {_id: Meteor.userId()}, {$inc: {gold_stars: 1}}
+    Meteor.users.update {_id: Meteor.userId()}, {$inc: {points: -10, gold_stars: 1}}, (error) ->
+      unless error
+        callback()
     true
 
-pluralize = (string, count) ->
+pluralize = (string, count, show_count=true) ->
   if count != 1
     string = string + 's'
-  "#{count} #{string}"
+  if show_count
+    "#{count} #{string}"
+  else
+    string

@@ -6,4 +6,14 @@ Meteor.publish "userData", ->
 
 Meteor.users.allow
   update: (userId, docs, fields, modifier) ->
-    ('points' in fields || 'gold_stars' in fields)
+    #('points' in fields || 'gold_stars' in fields)
+    if 'points' in fields
+      change = modifier['$inc']['points']
+      (change > 0 && change <= 10 || change == -10)
+    else if 'gold_stars' in fields
+      (Meteor.user().gold_stars > 0)
+
+Activities.allow
+  insert: (userId, doc) ->
+    if userId && doc.userId == userId
+      (doc.points > 0 && doc.points <= 10)

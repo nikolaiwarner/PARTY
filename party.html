@@ -4,16 +4,17 @@
 
 <body>
   <div class="container">
-    <div class="navbar">
-      <div class="navbar-inner">
-        <a class="brand" href="#">PARTY</a>
-        <ul class="nav pull-right">
-          <li>{{loginButtons}}</li>
-        </ul>
+    <div class="row">
+      <div class="navbar">
+        <div class="span6 offset3">
+          <a class="brand" href="#">PARTY</a>
+          <ul class="nav pull-right">
+            <li>{{loginButtons}}</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="container">
+
     {{#if currentUser}}
     <div class="row">
       <div class="span6 offset3">
@@ -33,7 +34,20 @@
       </div>
     </div>
     {{> new_activity}}
+    {{> modals}}
     {{/if}}
+  </div>
+  <div class="navbar navbar-fixed-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="span6 offset3">
+          <a href="http://nwarner.com">PARTY by nikolaiwarner</a>
+          <div class="pull-right">
+            <a href="https://github.com/nikolaiwarner/party">about</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 
@@ -46,15 +60,15 @@
       <h3>Add An Activity</h3>
     </div>
     <div class="modal-body">
-      <form class="form-horizontal">
+      <form class="form">
         <div class="control-group">
-          <label class="control-label">Name of activity</label>
+          <label class="control-label">What are you going to do?</label>
           <div class="controls">
-            <input type="text" class="name" placeholder="Activity name" />
+            <input type="text" class="name" placeholder="Run 10 miles." />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label">Point Value</label>
+          <label class="control-label">How many points is it worth? 1-10</label>
           <div class="controls">
             <input type="number" class="points" min="1" max="10" value="1" />
           </div>
@@ -79,7 +93,7 @@
       {{> activity_list_row}}
     {{/each}}
     <br>
-    <a href="#new_activity_modal" role="button" data-toggle="modal">Add An Activity</a>
+    <a href="#new_activity_modal" role="button" data-toggle="modal">Add An Activity For Yourself</a>
   </div>
 </template>
 
@@ -106,13 +120,68 @@
 <template name="your_points">
   <div class="your_points">
     <div>
-      Points
+      Your Points
     </div>
     <h1>{{count}}</h1>
     <div>
-      Earn {{points_till_next_gold_star}} more points
+      Earn {{points_till_next_gold_star}}
       <br>
       and get a gold star!
+    </div>
+  </div>
+</template>
+
+
+
+<template name="modals">
+  <div id="you_earned_some_points_modal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Great job!</h3>
+    </div>
+    <div class="modal-body">
+      <div class="point">{{{earned_points_icon}}}</div>
+      <h3>You've earned {{earned_points}}!</h3>
+    </div>
+    <p>
+      Keep it going and earn a gold star!
+    </p>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
+  </div>
+
+  <div id="you_got_a_gold_star_modal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Congratulations!</h3>
+    </div>
+    <div class="modal-body">
+      <div class="gold_star">&#10026;</div>
+      <h3>You've earned a gold star!!!</h3>
+      <p>
+        When you're ready, trade this gold star in and treat yourself! You rock!
+      </p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
+  </div>
+
+  <div id="you_spent_a_gold_star_modal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>You spent a gold star!</h3>
+    </div>
+    <div class="modal-body">
+      <div class="check">&#10003;</div>
+      <h3>Now, go treat yourself!</h3>
+      <p>
+        Then come back and earn some more points!
+      </p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
   </div>
 </template>
