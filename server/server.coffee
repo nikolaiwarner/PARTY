@@ -6,7 +6,6 @@ Meteor.publish "userData", ->
 
 Meteor.users.allow
   update: (userId, docs, fields, modifier) ->
-    #('points' in fields || 'gold_stars' in fields)
     if 'points' in fields
       change = modifier['$inc']['points']
       (change > 0 && change <= 10 || change == -10)
