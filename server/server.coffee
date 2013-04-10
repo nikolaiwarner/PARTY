@@ -1,3 +1,5 @@
+Activities = new Meteor.Collection("activities")
+
 Meteor.publish "activities", ->
   Activities.find {}
 
