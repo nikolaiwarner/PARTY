@@ -89,9 +89,11 @@
       Do something good.
     </h2>
     <div class="clearfix">
-    {{#each activities}}
-      {{> activity_list_row}}
-    {{/each}}
+    <table class="table">
+      {{#each activities}}
+        {{> activity_list_row}}
+      {{/each}}
+    </table>
     <br>
     <a href="#new_activity_modal" role="button" data-toggle="modal">Add An Activity For Yourself</a>
   </div>
@@ -99,11 +101,27 @@
 
 
 <template name="activity_list_row">
-  <a class="btn did_activity" data-points="{{points}}">
-    <strong>{{name}}</strong>
-    <br>
-    {{points_string points}}
-  </a>
+  <tr>
+    <td>
+      <a class="btn did_activity">
+        &rarr;
+      </a>
+    </td>
+    <td>
+      <strong>{{name}}</strong>
+      for {{points_string points}}
+    </td>
+    <td class="last_event">
+      {{last_event}}
+    </td>
+    <td class="event_count">
+      {{event_count}}
+    </td>
+
+    <td>
+      <span class="remove_activity">x</span>
+    </td>
+  </tr>
 </template>
 
 

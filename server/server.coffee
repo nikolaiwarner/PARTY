@@ -1,7 +1,11 @@
 Activities = new Meteor.Collection("activities")
+Events = new Meteor.Collection("events")
 
 Meteor.publish "activities", ->
   Activities.find {}
+
+Meteor.publish "events", ->
+  Events.find {}
 
 Meteor.publish "userData", ->
   Meteor.users.find({_id: this.userId}, {fields: {'points': 1, 'gold_stars': 1}})
@@ -18,3 +22,9 @@ Activities.allow
   insert: (userId, doc) ->
     if userId && doc.userId == userId
       (doc.points > 0 && doc.points <= 10)
+  remove: (userId, doc) ->
+    doc.userId == userId
+
+Events.allow
+  insert: (userId, doc) ->
+    userId && doc.userId == userId

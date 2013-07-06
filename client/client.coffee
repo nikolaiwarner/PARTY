@@ -26,9 +26,11 @@ pluralize = (string, count, show_count=true) ->
     string
 
 Activities = new Meteor.Collection("activities")
+Events = new Meteor.Collection("events")
 
 Meteor.autosubscribe ->
   Meteor.subscribe("activities")
+  Meteor.subscribe("events")
   Meteor.subscribe("userData")
 
 # activity list
@@ -38,17 +40,29 @@ Template.your_activities_list.helpers
 
 Template.your_activities_list.events
   "click .did_activity": (event) ->
-    points = parseInt($(event.currentTarget).data('points'), 10)
-    Session.set("earned_points", points)
-    Meteor.users.update {_id: Meteor.userId()}, {$inc: {points: points}}, (error) ->
+    activity = @
+    Session.set("earned_points", activity.points)
+    Meteor.users.update {_id: Meteor.userId()}, {$inc: {points: activity.points}}, (error) ->
       unless error
+        Events.insert
+          userId: Meteor.userId()
+          activity_id: activity._id
+          date: Date.now()
         unless did_i_earn_a_gold_star( -> $('#you_got_a_gold_star_modal').modal('show') )
           $('#you_earned_some_points_modal').modal('show')
+
+  "click .remove_activity": (event, other) ->
+    Activities.remove @_id
 
 
 Template.activity_list_row.helpers
   points_string: (points)->
     pluralize('point', points)
+  last_event: ->
+    if e = Events.findOne {activity_id: @_id}, {sort: {date: -1}}
+      moment(e.date).fromNow()
+  event_count: ->
+    Events.find({activity_id: @_id}).count()
 
 
 # New Activity
