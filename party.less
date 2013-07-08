@@ -35,9 +35,20 @@
     color: #bbb;
   }
 
-  tr:hover .remove_activity {
-    opacity: 1;
+  tr {
+    transition: opacity 1s;
 
+    &:hover {
+      opacity: 1;
+
+      & .remove_activity {
+        opacity: 1;
+      }
+    }
+
+    &.completed_today {
+      opacity: 0.3;
+    }
   }
 }
 
@@ -54,6 +65,11 @@
   border-top: 1px solid #eee;
   padding-top: 10px;
   background-color: #fff;
+}
+
+.footer {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 #login-buttons .login-button {

@@ -51,18 +51,24 @@ Template.your_activities_list.events
         unless did_i_earn_a_gold_star( -> $('#you_got_a_gold_star_modal').modal('show') )
           $('#you_earned_some_points_modal').modal('show')
 
-  "click .remove_activity": (event, other) ->
-    Activities.remove @_id
+  "click .remove_activity": (event) ->
+    activity = @
+    $(event.target).closest('tr').find('td').fadeOut 1000, ->
+      Activities.remove activity.id
 
 
 Template.activity_list_row.helpers
-  points_string: (points)->
-    pluralize('point', points)
+  points_string: ->
+    pluralize('point', @points)
   last_event: ->
     if e = Events.findOne {activity_id: @_id}, {sort: {date: -1}}
       moment(e.date).fromNow()
   event_count: ->
     Events.find({activity_id: @_id}).count()
+  completed_today_class: ->
+    e = Events.findOne {activity_id: @_id}, {sort: {date: -1}}
+    if e && moment(e.date) > moment().startOf('day')
+      'completed_today'
 
 
 # New Activity
@@ -71,6 +77,7 @@ Template.new_activity.events
     data =
       userId: Meteor.userId()
       name: $('.new_activity .name').val()
+      url: $('.new_activity .url').val()
       points: parseInt($('.new_activity .points').val(), 10)
     Activities.insert data
     $('#new_activity_modal').modal('hide')
@@ -100,3 +107,6 @@ Template.your_gold_stars.events
       Meteor.users.update {_id: Meteor.userId()}, {$inc: {gold_stars: -1}}, (error) ->
         unless error
           $('#you_spent_a_gold_star_modal').modal('show')
+
+$ ->
+  $('[rel=tooltip]').tooltip()

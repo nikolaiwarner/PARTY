@@ -7,7 +7,7 @@
     <div class="row">
       <div class="navbar">
         <div class="span6 offset3">
-          <a class="brand" href="#">PARTY</a>
+          <a class="brand" href="#" rel="tooltip" data-placement="right" title="PARTY: Productively And Responsibly Treating Yourself!">PARTY</a>
           <ul class="nav pull-right">
             <li>{{loginButtons}}</li>
           </ul>
@@ -36,15 +36,12 @@
     {{> new_activity}}
     {{> modals}}
     {{/if}}
-  </div>
-  <div class="navbar navbar-fixed-bottom">
-    <div class="container">
-      <div class="row">
-        <div class="span6 offset3">
-          <a href="http://nwarner.com">PARTY by nikolaiwarner</a>
-          <div class="pull-right">
-            <a href="https://github.com/nikolaiwarner/party">about</a>
-          </div>
+
+    <div class="row footer">
+      <div class="span6 offset3">
+        <a href="http://nwarner.com">PARTY by nikolaiwarner</a>
+        <div class="pull-right">
+          <a href="https://github.com/nikolaiwarner/party">about</a>
         </div>
       </div>
     </div>
@@ -73,6 +70,12 @@
             <input type="number" class="points" min="1" max="10" value="1" />
           </div>
         </div>
+        <div class="control-group">
+          <label class="control-label">Optional URL for this activity:</label>
+          <div class="controls">
+            <input type="text" class="url" placeholder="http://..." />
+          </div>
+        </div>
       </form>
     </div>
     <div class="modal-footer">
@@ -95,21 +98,27 @@
       {{/each}}
     </table>
     <br>
-    <a href="#new_activity_modal" role="button" data-toggle="modal">Add An Activity For Yourself</a>
+    <a href="#new_activity_modal" role="button" data-toggle="modal">+ Add An Activity For Yourself</a>
   </div>
 </template>
 
 
 <template name="activity_list_row">
-  <tr>
+  <tr class="{{completed_today_class}}">
     <td>
       <a class="btn did_activity">
         &rarr;
       </a>
     </td>
     <td>
-      <strong>{{name}}</strong>
-      for {{points_string points}}
+      <strong>
+        {{#if url}}
+          <a href="{{url}}" target="_blank">{{name}}</a>
+        {{else}}
+          {{name}}
+        {{/if}}
+      </strong>
+      for {{points_string}}
     </td>
     <td class="last_event">
       {{last_event}}
