@@ -1,3 +1,6 @@
+check_time = ->
+  Session.set("last_moment", Date.now())
+
 my_gold_stars = ->
   if Meteor.user()
     Meteor.user().gold_stars || 0
@@ -33,6 +36,9 @@ Meteor.autosubscribe ->
   Meteor.subscribe("events")
   Meteor.subscribe("userData")
 
+Meteor.startup ->
+  check_time()
+
 # activity list
 Template.your_activities_list.helpers
   activities: ->
@@ -67,8 +73,10 @@ Template.activity_list_row.helpers
     Events.find({activity_id: @_id}).count()
   completed_today_class: ->
     e = Events.findOne {activity_id: @_id}, {sort: {date: -1}}
-    if e && moment(e.date) > moment().startOf('day')
-      'completed_today'
+    console.log moment(Session.get("last_moment"))
+    if Session.get("last_moment")
+      if e && moment(e.date) > moment(Session.get("last_moment")).startOf('day')
+        'completed_today'
 
 
 # New Activity
@@ -110,3 +118,6 @@ Template.your_gold_stars.events
 
 $ ->
   $('[rel=tooltip]').tooltip()
+
+  # Recheck date every 30 minutes
+  setInterval check_time, moment.duration(30, 'minutes')._milliseconds
