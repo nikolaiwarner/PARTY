@@ -1,5 +1,5 @@
 check_time = ->
-  Session.set("last_moment", Date.now())
+  Session.set("recent_time", Date.now())
 
 my_gold_stars = ->
   if Meteor.user()
@@ -28,6 +28,13 @@ pluralize = (string, count, show_count=true) ->
   else
     string
 
+earned_points = ->
+  pluralize('point', Session.get("earned_points"))
+
+earned_points_icon = ->
+  "&##{Session.get('earned_points') + 10111};"
+
+
 Activities = new Meteor.Collection("activities")
 Events = new Meteor.Collection("events")
 
@@ -37,7 +44,12 @@ Meteor.autosubscribe ->
   Meteor.subscribe("userData")
 
 Meteor.startup ->
+  setTimeout (-> $('.brand').tooltip()), 2000
+
+  # Recheck date every 30 minutes
   check_time()
+  setInterval check_time, moment.duration(30, 'minutes')._milliseconds
+
 
 # activity list
 Template.your_activities_list.helpers
@@ -55,7 +67,7 @@ Template.your_activities_list.events
           activity_id: activity._id
           date: Date.now()
         unless did_i_earn_a_gold_star( -> $('#you_got_a_gold_star_modal').modal('show') )
-          $('#you_earned_some_points_modal').modal('show')
+          window.toastr.success("Keep it going and earn a gold star!", "You've earned #{earned_points()}!")
 
   "click .remove_activity": (event) ->
     activity = @
@@ -73,9 +85,8 @@ Template.activity_list_row.helpers
     Events.find({activity_id: @_id}).count()
   completed_today_class: ->
     e = Events.findOne {activity_id: @_id}, {sort: {date: -1}}
-    console.log moment(Session.get("last_moment"))
-    if Session.get("last_moment")
-      if e && moment(e.date) > moment(Session.get("last_moment")).startOf('day')
+    if Session.get("recent_time")
+      if e && moment(e.date) > moment(Session.get("recent_time")).startOf('day')
         'completed_today'
 
 
@@ -89,12 +100,6 @@ Template.new_activity.events
       points: parseInt($('.new_activity .points').val(), 10)
     Activities.insert data
     $('#new_activity_modal').modal('hide')
-
-Template.modals.helpers
-  earned_points: ->
-    pluralize('point', Session.get("earned_points"))
-  earned_points_icon: ->
-    "&##{Session.get('earned_points') + 10111};"
 
 Template.your_points.helpers
   count: ->
@@ -115,9 +120,3 @@ Template.your_gold_stars.events
       Meteor.users.update {_id: Meteor.userId()}, {$inc: {gold_stars: -1}}, (error) ->
         unless error
           $('#you_spent_a_gold_star_modal').modal('show')
-
-$ ->
-  $('[rel=tooltip]').tooltip()
-
-  # Recheck date every 30 minutes
-  setInterval check_time, moment.duration(30, 'minutes')._milliseconds
