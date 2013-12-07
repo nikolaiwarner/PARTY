@@ -1,20 +1,33 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab);
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+@color: #5b917a;
+
+body {
+
+}
+
+a {
+  color: @color;
+}
+
 .your_gold_stars, .your_points {
   text-align: center;
-  outline: 1px solid #5b917a;
+  // border: 1px solid #aaa;
+  // border-bottom-width: 2px;
   padding: 10px;
-  min-height: 200px;
+  min-height: 220px;
 
   h1 {
     font-size: 100px;
     line-height: 100px;
+    margin-top: 15px;
   }
 }
 
 .your_activities_list {
-  text-align: center;
-  outline: 1px solid #5b917a;
+  text-align: left;
   padding: 10px;
-  margin-top: 20px;
 
   .btn {
     margin-bottom: 5px;
@@ -28,11 +41,15 @@
     color: #999;
   }
 
-  .remove_activity {
+  .remove_activity, .edit_activity {
     opacity: 0;
     transition: opacity 1s;
     cursor: pointer;
     color: #bbb;
+  }
+
+  h2 {
+    text-align: center;
   }
 
   tr {
@@ -41,8 +58,9 @@
     &:hover {
       opacity: 1;
 
-      & .remove_activity {
+      & .remove_activity, .edit_activity {
         opacity: 1;
+        transform: scale(1.1);
       }
     }
 

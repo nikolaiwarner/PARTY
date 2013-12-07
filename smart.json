@@ -4,6 +4,9 @@
     "branch": "master"
   },
   "packages": {
-    "moment": {}
+    "moment": {},
+    "nprogress": {},
+    "bootstrap-3": {},
+    "iron-router": {}
   }
 }

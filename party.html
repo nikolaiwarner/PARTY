@@ -7,7 +7,7 @@
   <div class="container">
     <div class="row">
       <div class="navbar">
-        <div class="span6 offset3">
+        <div class="col-sm-12">
           <a class="brand" href="#" data-placement="right" title="PARTY: Productively And Responsibly Treating Yourself!">PARTY</a>
           <ul class="nav pull-right">
             <li>{{loginButtons}}</li>
@@ -18,20 +18,14 @@
 
     {{#if currentUser}}
       <div class="row">
-        <div class="span6 offset3">
-          <div class="row-fluid">
-            <div class="span6">
-              {{> your_gold_stars}}
-            </div>
-            <div class="span6">
-              {{> your_points}}
-            </div>
-          </div>
-          <div class="row-fluid">
-            <div class="span12">
-              {{> your_activities_list}}
-            </div>
-          </div>
+        <div class="col-sm-9">
+          {{> your_activities_list}}
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          {{> your_gold_stars}}
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          {{> your_points}}
         </div>
       </div>
       {{> new_activity}}
@@ -39,7 +33,7 @@
     {{/if}}
 
     <div class="row footer">
-      <div class="span6 offset3">
+      <div class="col-sm-12">
         <a href="http://nwarner.com">PARTY by nikolaiwarner</a>
         <div class="pull-right">
           <a href="https://github.com/nikolaiwarner/party">about</a>
@@ -93,7 +87,7 @@
       Do something good.
     </h2>
     <div class="clearfix">
-    <table class="table">
+    <table class="table table-hover table-responsive">
       {{#each activities}}
         {{> activity_list_row}}
       {{/each}}
@@ -107,19 +101,17 @@
 <template name="activity_list_row">
   <tr class="{{completed_today_class}}">
     <td>
-      <a class="btn did_activity">
-        &rarr;
+      <a class="btn btn-default btn-sm did_activity">
+        <i class="fa fa-check"></i>
       </a>
-    </td>
-    <td>
       <strong>
         {{#if url}}
           <a href="{{url}}" target="_blank">{{name}}</a>
         {{else}}
           {{name}}
         {{/if}}
+        for {{points_string}}
       </strong>
-      for {{points_string}}
     </td>
     <td class="last_event">
       {{last_event}}
@@ -129,7 +121,8 @@
     </td>
 
     <td>
-      <span class="remove_activity">x</span>
+      <i class="fa fa-wrench edit_activity"></i>
+      <i class="fa fa-times remove_activity"></i>
     </td>
   </tr>
 </template>
@@ -140,11 +133,13 @@
     <div>
       Your Gold Stars
     </div>
-    <h1>{{count}}</h1>
     {{#if has_gold_stars}}
-    <div>
-      <a class="btn btn-success spend_a_gold_star">Spend &#10029;</a>
-    </div>
+      {{#each star_list}}
+        <i class="fa fa-star"></i>
+      {{/each}}
+      <div>
+        <a class="btn btn-success spend_a_gold_star">Spend &#10029;</a>
+      </div>
     {{/if}}
   </div>
 </template>
@@ -154,7 +149,9 @@
     <div>
       Your Points
     </div>
-    <h1>{{count}}</h1>
+    {{#each point_list}}
+      <i class="fa fa-square"></i>
+    {{/each}}
     <div>
       Earn {{points_till_next_gold_star}}
       <br>
@@ -179,7 +176,7 @@
       </p>
     </div>
     <div class="modal-footer">
-      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
   </div>
 
@@ -196,7 +193,7 @@
       </p>
     </div>
     <div class="modal-footer">
-      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</a>
     </div>
   </div>
 </template>

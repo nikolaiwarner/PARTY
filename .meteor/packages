@@ -10,5 +10,11 @@ accounts-google
 accounts-ui
 accounts-base
 email
-bootstrap
+bootstrap-3
 appcache
+standard-app-packages
+moment
+underscore
+browser-policy
+iron-router
+nprogress

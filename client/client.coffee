@@ -107,12 +107,16 @@ Template.your_points.helpers
   points_till_next_gold_star: ->
     points = 10 - my_points()
     "#{points} more #{pluralize('point', points, false)}"
+  point_list: ->
+    [1..my_points()]
 
 Template.your_gold_stars.helpers
   count: ->
     my_gold_stars()
   has_gold_stars: ->
     (my_gold_stars() > 0)
+  star_list: ->
+    [1..my_gold_stars()]
 
 Template.your_gold_stars.events
   "click .spend_a_gold_star": (event) ->
