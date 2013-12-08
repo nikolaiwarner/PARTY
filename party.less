@@ -11,26 +11,17 @@ a {
   color: @color;
 }
 
-.your_gold_stars, .your_points {
-  text-align: center;
-  // border: 1px solid #aaa;
-  // border-bottom-width: 2px;
-  padding: 10px;
-  min-height: 220px;
-
-  h1 {
-    font-size: 100px;
-    line-height: 100px;
-    margin-top: 15px;
-  }
-}
-
-.your_activities_list {
+.activity_list {
   text-align: left;
-  padding: 10px;
 
-  .btn {
-    margin-bottom: 5px;
+  .activity_list_row {
+    .name {
+      margin-left: 10px;
+    }
+
+    .did_activity {
+      margin-left: -8px;
+    }
   }
 
   .last_event {
@@ -39,6 +30,11 @@ a {
 
   .event_count {
     color: #999;
+  }
+
+  .edit_activity {
+    //TODO: hidden until this is a thing.
+    display: none;
   }
 
   .remove_activity, .edit_activity {
@@ -114,5 +110,15 @@ a {
   }
   .check {
     color: #5bb75b;
+  }
+}
+
+.table {
+  tbody {
+    tr {
+      td {
+        border-top: 0;
+      }
+    }
   }
 }
