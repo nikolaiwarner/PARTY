@@ -16,5 +16,4 @@ standard-app-packages
 moment
 underscore
 browser-policy
-iron-router
 nprogress
