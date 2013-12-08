@@ -1,11 +1,11 @@
 Activities = new Meteor.Collection("activities")
 Events = new Meteor.Collection("events")
 
-Meteor.publish "activities", ->
-  Activities.find {}
+Meteor.publish "activities", (userId) ->
+  Activities.find {userId: userId}, {sort: {name: -1}}
 
-Meteor.publish "events", ->
-  Events.find {}
+Meteor.publish "events", (userId) ->
+  Events.find {userId: userId}
 
 Meteor.publish "userData", ->
   Meteor.users.find({_id: this.userId}, {fields: {'points': 1, 'gold_stars': 1}})

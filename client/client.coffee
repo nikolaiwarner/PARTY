@@ -39,13 +39,11 @@ Activities = new Meteor.Collection("activities")
 Events = new Meteor.Collection("events")
 
 Meteor.autosubscribe ->
-  Meteor.subscribe("activities")
-  Meteor.subscribe("events")
-  Meteor.subscribe("userData")
+  Meteor.subscribe "activities", Meteor.userId()
+  Meteor.subscribe "events", Meteor.userId()
+  Meteor.subscribe "userData"
 
 Meteor.startup ->
-  setTimeout (-> $('.brand').tooltip()), 2000
-
   # Recheck date every 30 minutes
   check_time()
   setInterval check_time, moment.duration(30, 'minutes')._milliseconds
