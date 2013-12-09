@@ -98,7 +98,7 @@ Template.new_activity.events
       points: parseInt($('.new_activity .points').val(), 10)
     Activities.insert data
     $('#new_activity_modal').modal('hide')
-    $('.new_activity .name, .new_activity .url, ').val('')
+    $('.new_activity .name, .new_activity .url').val('')
     $('.new_activity .points').val(1)
 
 Template.your_points.helpers
