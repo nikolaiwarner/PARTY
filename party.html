@@ -142,12 +142,12 @@
 
 
 <template name="your_gold_stars">
-  <span class="your_gold_stars">
-    {{#each star_list}}
-      <i class="fa fa-star"></i>
-    {{/each}}
-  </span>
   {{#if has_gold_stars}}
+    <span class="your_gold_stars" title="Click the 'Spend &#10029;' button and go treat yourself!">
+      {{#each star_list}}
+        <i class="fa fa-star"></i>
+      {{/each}}
+    </span>
     <a class="btn btn-success pull-right spend_a_gold_star">Spend &#10029;</a>
   {{/if}}
 </template>

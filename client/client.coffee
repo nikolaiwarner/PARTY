@@ -70,7 +70,7 @@ Template.your_activities_list.events
   "click .remove_activity": (event) ->
     activity = @
     $(event.target).closest('tr').find('td').fadeOut 1000, ->
-      Activities.remove activity.id
+      Activities.remove activity._id
 
 
 Template.activity_list_row.helpers
